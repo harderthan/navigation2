@@ -126,6 +126,14 @@ public:
   unsigned char getCost(unsigned int mx, unsigned int my) const;
 
   /**
+   * @brief  Get the cost of a cell in the costmap
+   * @param mx The x coordinate of the cell
+   * @param my The y coordinate of the cell
+   * @return The cost of the cell
+   */
+  unsigned char getCost(unsigned int index) const;
+
+  /**
    * @brief  Set the cost of a cell in the costmap
    * @param mx The x coordinate of the cell
    * @param my The y coordinate of the cell
@@ -402,14 +410,16 @@ protected:
     // if x is dominant
     if (abs_dx >= abs_dy) {
       int error_y = abs_dx / 2;
-      bresenham2D(at, abs_dx, abs_dy, error_y, offset_dx, offset_dy, offset,
+      bresenham2D(
+        at, abs_dx, abs_dy, error_y, offset_dx, offset_dy, offset,
         (unsigned int)(scale * abs_dx));
       return;
     }
 
     // otherwise y is dominant
     int error_x = abs_dy / 2;
-    bresenham2D(at, abs_dy, abs_dx, error_x, offset_dy, offset_dx, offset,
+    bresenham2D(
+      at, abs_dy, abs_dx, error_x, offset_dy, offset_dx, offset,
       (unsigned int)(scale * abs_dy));
   }
 

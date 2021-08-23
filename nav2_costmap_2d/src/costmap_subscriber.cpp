@@ -48,9 +48,10 @@ CostmapSubscriber::CostmapSubscriber(
   node_logging_(node_logging),
   topic_name_(topic_name)
 {
-  costmap_sub_ = rclcpp::create_subscription<nav2_msgs::msg::Costmap>(node_topics_, topic_name_,
-      rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(),
-      std::bind(&CostmapSubscriber::costmapCallback, this, std::placeholders::_1));
+  costmap_sub_ = rclcpp::create_subscription<nav2_msgs::msg::Costmap>(
+    node_topics_, topic_name_,
+    rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable(),
+    std::bind(&CostmapSubscriber::costmapCallback, this, std::placeholders::_1));
 }
 
 std::shared_ptr<Costmap2D> CostmapSubscriber::getCostmap()
@@ -69,14 +70,15 @@ void CostmapSubscriber::toCostmap2D()
       costmap_msg_->metadata.size_x, costmap_msg_->metadata.size_y,
       costmap_msg_->metadata.resolution, costmap_msg_->metadata.origin.position.x,
       costmap_msg_->metadata.origin.position.y);
-  } else if (costmap_->getSizeInCellsX() != costmap_msg_->metadata.size_x ||
+  } else if (costmap_->getSizeInCellsX() != costmap_msg_->metadata.size_x ||  // NOLINT
     costmap_->getSizeInCellsY() != costmap_msg_->metadata.size_y ||
     costmap_->getResolution() != costmap_msg_->metadata.resolution ||
     costmap_->getOriginX() != costmap_msg_->metadata.origin.position.x ||
     costmap_->getOriginY() != costmap_msg_->metadata.origin.position.y)
   {
     // Update the size of the costmap
-    costmap_->resizeMap(costmap_msg_->metadata.size_x, costmap_msg_->metadata.size_y,
+    costmap_->resizeMap(
+      costmap_msg_->metadata.size_x, costmap_msg_->metadata.size_y,
       costmap_msg_->metadata.resolution,
       costmap_msg_->metadata.origin.position.x,
       costmap_msg_->metadata.origin.position.y);

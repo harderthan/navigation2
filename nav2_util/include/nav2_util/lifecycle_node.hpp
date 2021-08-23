@@ -19,12 +19,14 @@
 #include <string>
 #include <thread>
 
-#include "nav2_util/lifecycle_helper_interface.hpp"
+#include "nav2_util/node_thread.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace nav2_util
 {
+
+using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 // The following is a temporary wrapper for rclcpp_lifecycle::LifecycleNode. This class
 // adds the optional creation of an rclcpp::Node that can be used by derived classes
@@ -113,7 +115,23 @@ public:
     declare_parameter(descriptor.name, default_value, descriptor);
   }
 
+  std::shared_ptr<nav2_util::LifecycleNode> shared_from_this()
+  {
+    return std::static_pointer_cast<nav2_util::LifecycleNode>(
+      rclcpp_lifecycle::LifecycleNode::shared_from_this());
+  }
+
+  nav2_util::CallbackReturn on_error(const rclcpp_lifecycle::State & /*state*/)
+  {
+    RCLCPP_FATAL(
+      get_logger(),
+      "Lifecycle node %s does not have error state implemented", get_name());
+    return nav2_util::CallbackReturn::SUCCESS;
+  }
+
 protected:
+  void print_lifecycle_node_notification();
+
   // Whether or not to create a local rclcpp::Node which can be used for ROS2 classes that don't
   // yet support lifecycle nodes
   bool use_rclcpp_node_;
@@ -122,8 +140,7 @@ protected:
   rclcpp::Node::SharedPtr rclcpp_node_;
 
   // When creating a local node, this class will launch a separate thread created to spin the node
-  std::unique_ptr<std::thread> rclcpp_thread_;
-  rclcpp::executors::SingleThreadedExecutor rclcpp_exec_;
+  std::unique_ptr<NodeThread> rclcpp_thread_;
 };
 
 }  // namespace nav2_util

@@ -82,9 +82,13 @@ public:
   /**
    * @brief  Constructor for the wrapper
    * @param name Name of the costmap ROS node
-   * @param absolute_namespace Namespace of the costmap ROS node starting with "/"
+   * @param parent_namespace Absolute namespace of the node hosting the costmap node
+   * @param local_namespace Namespace to append to the parent namespace
    */
-  explicit Costmap2DROS(const std::string & name, const std::string & absolute_namespace);
+  explicit Costmap2DROS(
+    const std::string & name,
+    const std::string & parent_namespace,
+    const std::string & local_namespace);
 
   ~Costmap2DROS();
 
@@ -93,7 +97,6 @@ public:
   nav2_util::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & state) override;
   nav2_util::CallbackReturn on_cleanup(const rclcpp_lifecycle::State & state) override;
   nav2_util::CallbackReturn on_shutdown(const rclcpp_lifecycle::State & state) override;
-  nav2_util::CallbackReturn on_error(const rclcpp_lifecycle::State & state) override;
 
   /**
    * @brief  Subscribes to sensor topics if necessary and starts costmap
@@ -245,6 +248,14 @@ public:
 
   std::shared_ptr<tf2_ros::Buffer> getTfBuffer() {return tf_buffer_;}
 
+  /**
+   * @brief  Get the costmap's use_radius_ parameter, corresponding to
+   * whether the footprint for the robot is a circle with radius robot_radius_
+   * or an arbitrarily defined footprint in footprint_.
+   * @return  use_radius_
+   */
+  bool getUseRadius() {return use_radius_;}
+
 protected:
   rclcpp::Node::SharedPtr client_node_;
 
@@ -262,6 +273,7 @@ protected:
 
   LayeredCostmap * layered_costmap_{nullptr};
   std::string name_;
+  std::string parent_namespace_;
   void mapUpdateLoop(double frequency);
   bool map_update_thread_shutdown_{false};
   bool stop_updates_{false};
@@ -284,6 +296,8 @@ protected:
   int map_width_meters_{0};
   double origin_x_{0};
   double origin_y_{0};
+  std::vector<std::string> default_plugins_;
+  std::vector<std::string> default_types_;
   std::vector<std::string> plugin_names_;
   std::vector<std::string> plugin_types_;
   double resolution_{0};

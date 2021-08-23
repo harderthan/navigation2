@@ -1,7 +1,8 @@
 #goal definition
 geometry_msgs/Point target
+float32 speed
 ---
 #result definition
-std_msgs/Empty result
+builtin_interfaces/Duration total_elapsed_time
 ---
-#feedback
+float32 distance_traveled

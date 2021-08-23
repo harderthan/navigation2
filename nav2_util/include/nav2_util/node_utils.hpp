@@ -80,6 +80,33 @@ std::string time_to_string(size_t len);
 rclcpp::NodeOptions
 get_node_options_default(bool allow_undeclared = true, bool declare_initial_params = true);
 
+template<typename NodeT>
+void declare_parameter_if_not_declared(
+  NodeT node,
+  const std::string & param_name,
+  const rclcpp::ParameterValue & default_value = rclcpp::ParameterValue(),
+  const rcl_interfaces::msg::ParameterDescriptor & parameter_descriptor =
+  rcl_interfaces::msg::ParameterDescriptor())
+{
+  if (!node->has_parameter(param_name)) {
+    node->declare_parameter(param_name, default_value, parameter_descriptor);
+  }
+}
+
+template<typename NodeT>
+std::string get_plugin_type_param(
+  NodeT node,
+  const std::string & plugin_name)
+{
+  declare_parameter_if_not_declared(node, plugin_name + ".plugin");
+  std::string plugin_type;
+  if (!node->get_parameter(plugin_name + ".plugin", plugin_type)) {
+    RCLCPP_FATAL(node->get_logger(), "'plugin' param not defined for %s", plugin_name.c_str());
+    exit(-1);
+  }
+  return plugin_type;
+}
+
 }  // namespace nav2_util
 
 #endif  // NAV2_UTIL__NODE_UTILS_HPP_

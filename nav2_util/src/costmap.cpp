@@ -38,7 +38,8 @@ Costmap::Costmap(
   lethal_threshold_(lethal_threshold), unknown_cost_value_(unknown_cost_value)
 {
   if (lethal_threshold_ < 0. || lethal_threshold_ > 100.) {
-    RCLCPP_WARN(node_->get_logger(), "Costmap: Lethal threshold set to %.2f, it should be within"
+    RCLCPP_WARN(
+      node_->get_logger(), "Costmap: Lethal threshold set to %.2f, it should be within"
       " bounds 0-100. This could result in potential collisions!", lethal_threshold_);
     // lethal_threshold_ = std::max(std::min(lethal_threshold_, 100), 0);
   }
@@ -87,7 +88,7 @@ void Costmap::set_test_costmap(const TestCostmap & testCostmapType)
 {
   costmap_properties_.map_load_time = node_->now();
   costmap_properties_.update_time = node_->now();
-  costmap_properties_.layer = "Master";
+  costmap_properties_.layer = "master";
   costmap_properties_.resolution = 1;
   costmap_properties_.size_x = 10;
   costmap_properties_.size_y = 10;
