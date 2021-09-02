@@ -98,7 +98,7 @@ void OscillationCritic::onInit()
   oscillation_reset_angle_ = nav_2d_utils::searchAndGetParam(
     nh_,
     dwb_plugin_name_ + "." + name_ + ".oscillation_reset_angle", 0.2);
-  oscillation_reset_time_ = rclcpp::Duration::from_seconds(
+  oscillation_reset_time_ = rclcpp::Duration(
     nav_2d_utils::searchAndGetParam(
       nh_,
       dwb_plugin_name_ + "." + name_ + ".oscillation_reset_time", -1.0));
@@ -182,7 +182,7 @@ bool OscillationCritic::resetAvailable()
       return true;
     }
   }
-  if (oscillation_reset_time_ >= rclcpp::Duration::from_seconds(0.0)) {
+  if (oscillation_reset_time_ >= rclcpp::Duration(0.0)) {
     auto t_diff = (nh_->now() - prev_reset_time_);
     if (t_diff > oscillation_reset_time_) {
       return true;

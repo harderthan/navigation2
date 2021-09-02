@@ -43,7 +43,7 @@ const geometry_msgs::msg::Pose2D & getClosestPose(
   const dwb_msgs::msg::Trajectory2D & trajectory,
   const double time_offset)
 {
-  rclcpp::Duration goal_time = rclcpp::Duration::from_seconds(time_offset);
+  rclcpp::Duration goal_time = rclcpp::Duration(time_offset);
   const unsigned int num_poses = trajectory.poses.size();
   if (num_poses == 0) {
     throw nav2_core::PlannerException("Cannot call getClosestPose on empty trajectory.");
@@ -67,7 +67,7 @@ geometry_msgs::msg::Pose2D projectPose(
   const dwb_msgs::msg::Trajectory2D & trajectory,
   const double time_offset)
 {
-  rclcpp::Duration goal_time = rclcpp::Duration::from_seconds(time_offset);
+  rclcpp::Duration goal_time = rclcpp::Duration(time_offset);
   const unsigned int num_poses = trajectory.poses.size();
   if (num_poses == 0) {
     throw nav2_core::PlannerException("Cannot call projectPose on empty trajectory.");

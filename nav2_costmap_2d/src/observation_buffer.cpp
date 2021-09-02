@@ -53,8 +53,8 @@ ObservationBuffer::ObservationBuffer(
   double raytrace_range, tf2_ros::Buffer & tf2_buffer, std::string global_frame,
   std::string sensor_frame, double tf_tolerance)
 : tf2_buffer_(tf2_buffer),
-  observation_keep_time_(rclcpp::Duration::from_seconds(observation_keep_time)),
-  expected_update_rate_(rclcpp::Duration::from_seconds(expected_update_rate)), nh_(nh),
+  observation_keep_time_(rclcpp::Duration(observation_keep_time)),
+  expected_update_rate_(rclcpp::Duration(expected_update_rate)), nh_(nh),
   last_updated_(nh->now()), global_frame_(global_frame), sensor_frame_(sensor_frame),
   topic_name_(topic_name),
   min_obstacle_height_(min_obstacle_height), max_obstacle_height_(max_obstacle_height),

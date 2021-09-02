@@ -39,7 +39,7 @@ void SimpleProgressChecker::initialize(
   nh_->get_parameter_or(plugin_name + ".required_movement_radius", radius_, 0.5);
   double time_allowance_param = 0.0;
   nh_->get_parameter_or(plugin_name + ".movement_time_allowance", time_allowance_param, 10.0);
-  time_allowance_ = rclcpp::Duration::from_seconds(time_allowance_param);
+  time_allowance_ = rclcpp::Duration(time_allowance_param);
 }
 
 bool SimpleProgressChecker::check(geometry_msgs::msg::PoseStamped & current_pose)

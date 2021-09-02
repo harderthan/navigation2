@@ -47,7 +47,7 @@
 #include "nav2_util/execution_timer.hpp"
 #include "nav2_util/node_utils.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
-#include "tf2_ros/create_timer_ros.h"
+// #include "tf2_ros/create_timer_ros.h"
 #include "nav2_util/robot_utils.hpp"
 
 using namespace std::chrono_literals;
@@ -136,10 +136,10 @@ Costmap2DROS::on_configure(const rclcpp_lifecycle::State & /*state*/)
 
   // Create the transform-related objects
   tf_buffer_ = std::make_shared<tf2_ros::Buffer>(rclcpp_node_->get_clock());
-  auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
-    rclcpp_node_->get_node_base_interface(),
-    rclcpp_node_->get_node_timers_interface());
-  tf_buffer_->setCreateTimerInterface(timer_interface);
+    // auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
+  //   rclcpp_node_->get_node_base_interface(),
+  //   rclcpp_node_->get_node_timers_interface());
+  // tf_buffer_->setCreateTimerInterface(timer_interface);
   tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
   // Then load and add the plug-ins to the costmap
@@ -322,7 +322,7 @@ Costmap2DROS::getParameters()
 
   // 2. The map publish frequency cannot be 0 (to avoid a divde-by-zero)
   if (map_publish_frequency_ > 0) {
-    publish_cycle_ = rclcpp::Duration::from_seconds(1 / map_publish_frequency_);
+    publish_cycle_ = rclcpp::Duration(1 / map_publish_frequency_);
   } else {
     publish_cycle_ = rclcpp::Duration(-1);
   }

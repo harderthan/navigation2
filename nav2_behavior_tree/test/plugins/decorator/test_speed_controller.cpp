@@ -93,7 +93,7 @@ TEST_F(SpeedControllerTestFixture, test_behavior)
   EXPECT_EQ(bt_node_->executeTick(), BT::NodeStatus::SUCCESS);
 
   // send new velocity for update after the next period
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.5);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.5);
   odom_msg.twist.twist.linear.x = 0;
   odom_msg.twist.twist.linear.y = 0;
   odom_pub->publish(odom_msg);

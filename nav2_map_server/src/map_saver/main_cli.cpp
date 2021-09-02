@@ -67,7 +67,7 @@ typedef enum
 // Input parameters: logger, argc, argv
 // Output parameters: map_topic, save_parameters
 ARGUMENTS_STATUS parse_arguments(
-  const rclcpp::Logger & logger, int argc, char ** argv,
+  const rclcpp::Logger logger, int argc, char ** argv,
   std::string & map_topic, SaveParameters & save_parameters)
 {
   const struct cmd_struct commands[] = {

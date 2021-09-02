@@ -101,13 +101,13 @@ public:
   virtual BT::NodeStatus check_future(
     std::shared_future<typename ServiceT::Response::SharedPtr> future_result)
   {
-    rclcpp::FutureReturnCode rc;
+    rclcpp::executor::FutureReturnCode rc;
     rc = rclcpp::spin_until_future_complete(
       node_,
       future_result, server_timeout_);
-    if (rc == rclcpp::FutureReturnCode::SUCCESS) {
+    if (rc == rclcpp::executor::FutureReturnCode::SUCCESS) {
       return BT::NodeStatus::SUCCESS;
-    } else if (rc == rclcpp::FutureReturnCode::TIMEOUT) {
+    } else if (rc == rclcpp::executor::FutureReturnCode::TIMEOUT) {
       RCLCPP_WARN(
         node_->get_logger(),
         "Node timed out while executing service call to %s.", service_name_.c_str());

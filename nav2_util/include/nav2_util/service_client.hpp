@@ -70,7 +70,7 @@ public:
     auto future_result = client_->async_send_request(request);
 
     if (rclcpp::spin_until_future_complete(node_, future_result, timeout) !=
-      rclcpp::FutureReturnCode::SUCCESS)
+      rclcpp::executor::FutureReturnCode::SUCCESS)
     {
       throw std::runtime_error(service_name_ + " service client: async_send_request failed");
     }
@@ -98,7 +98,7 @@ public:
     auto future_result = client_->async_send_request(request);
 
     if (rclcpp::spin_until_future_complete(node_, future_result) !=
-      rclcpp::FutureReturnCode::SUCCESS)
+      rclcpp::executor::FutureReturnCode::SUCCESS)
     {
       return false;
     }

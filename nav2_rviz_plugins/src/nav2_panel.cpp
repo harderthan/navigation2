@@ -433,7 +433,7 @@ Nav2Panel::onCancelButtonPressed()
       waypoint_follower_action_client_->async_cancel_goal(waypoint_follower_goal_handle_);
 
     if (rclcpp::spin_until_future_complete(client_node_, future_cancel, server_timeout_) !=
-      rclcpp::FutureReturnCode::SUCCESS)
+      rclcpp::executor::FutureReturnCode::SUCCESS)
     {
       RCLCPP_ERROR(client_node_->get_logger(), "Failed to cancel waypoint follower");
       return;
@@ -444,7 +444,7 @@ Nav2Panel::onCancelButtonPressed()
     auto future_cancel = navigation_action_client_->async_cancel_goal(navigation_goal_handle_);
 
     if (rclcpp::spin_until_future_complete(client_node_, future_cancel, server_timeout_) !=
-      rclcpp::FutureReturnCode::SUCCESS)
+      rclcpp::executor::FutureReturnCode::SUCCESS)
     {
       RCLCPP_ERROR(client_node_->get_logger(), "Failed to cancel goal");
       return;
@@ -548,7 +548,7 @@ Nav2Panel::startWaypointFollowing(std::vector<geometry_msgs::msg::PoseStamped> p
   auto future_goal_handle =
     waypoint_follower_action_client_->async_send_goal(waypoint_follower_goal_, send_goal_options);
   if (rclcpp::spin_until_future_complete(client_node_, future_goal_handle, server_timeout_) !=
-    rclcpp::FutureReturnCode::SUCCESS)
+    rclcpp::executor::FutureReturnCode::SUCCESS)
   {
     RCLCPP_ERROR(client_node_->get_logger(), "Send goal call failed");
     return;
@@ -588,7 +588,7 @@ Nav2Panel::startNavigation(geometry_msgs::msg::PoseStamped pose)
   auto future_goal_handle =
     navigation_action_client_->async_send_goal(navigation_goal_, send_goal_options);
   if (rclcpp::spin_until_future_complete(client_node_, future_goal_handle, server_timeout_) !=
-    rclcpp::FutureReturnCode::SUCCESS)
+    rclcpp::executor::FutureReturnCode::SUCCESS)
   {
     RCLCPP_ERROR(client_node_->get_logger(), "Send goal call failed");
     return;

@@ -111,10 +111,10 @@ protected:
       rclcpp::ParameterValue(std::string("local_costmap/published_footprint")));
 
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(node_lifecycle_->get_clock());
-    auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
-      node_lifecycle_->get_node_base_interface(),
-      node_lifecycle_->get_node_timers_interface());
-    tf_buffer_->setCreateTimerInterface(timer_interface);
+    // auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
+    //   node_lifecycle_->get_node_base_interface(),
+    //   node_lifecycle_->get_node_timers_interface());
+    // tf_buffer_->setCreateTimerInterface(timer_interface);
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
     std::string costmap_topic, footprint_topic;
@@ -157,7 +157,7 @@ protected:
     auto future_goal = client_->async_send_goal(goal);
 
     if (rclcpp::spin_until_future_complete(node_lifecycle_, future_goal) !=
-      rclcpp::FutureReturnCode::SUCCESS)
+      rclcpp::executor::FutureReturnCode::SUCCESS)
     {
       std::cout << "failed sending goal" << std::endl;
       // failed sending the goal

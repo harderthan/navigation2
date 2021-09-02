@@ -57,7 +57,7 @@ TEST(OdometryUtils, test_smoothed_velocity)
   EXPECT_EQ(twist_msg.linear.y, 1.0);
   EXPECT_EQ(twist_msg.angular.z, 1.0);
 
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.1);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.1);
   odom_msg.twist.twist.linear.x = 2.0;
   odom_msg.twist.twist.linear.y = 2.0;
   odom_msg.twist.twist.angular.z = 2.0;
@@ -71,7 +71,7 @@ TEST(OdometryUtils, test_smoothed_velocity)
   EXPECT_EQ(twist_msg.linear.y, 1.5);
   EXPECT_EQ(twist_msg.angular.z, 1.5);
 
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.2);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.2);
   odom_msg.twist.twist.linear.x = 3.0;
   odom_msg.twist.twist.linear.y = 3.0;
   odom_msg.twist.twist.angular.z = 3.0;
@@ -85,7 +85,7 @@ TEST(OdometryUtils, test_smoothed_velocity)
   EXPECT_EQ(twist_msg.linear.y, 2.0);
   EXPECT_EQ(twist_msg.angular.z, 2.0);
 
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.45);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.45);
   odom_msg.twist.twist.linear.x = 4.0;
   odom_msg.twist.twist.linear.y = 4.0;
   odom_msg.twist.twist.angular.z = 4.0;
@@ -99,7 +99,7 @@ TEST(OdometryUtils, test_smoothed_velocity)
   EXPECT_EQ(twist_msg.linear.y, 3.5);
   EXPECT_EQ(twist_msg.angular.z, 3.5);
 
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(1.0);
+  odom_msg.header.stamp = time + rclcpp::Duration(1.0);
   odom_msg.twist.twist.linear.x = 5.0;
   odom_msg.twist.twist.linear.y = 5.0;
   odom_msg.twist.twist.angular.z = 5.0;

@@ -166,13 +166,13 @@ dwb_msgs::msg::Trajectory2D StandardTrajectoryGenerator::generateTrajectory(
     pose = computeNewPosition(pose, vel, dt);
 
     traj.poses.push_back(pose);
-    traj.time_offsets.push_back(rclcpp::Duration::from_seconds(running_time));
+    traj.time_offsets.push_back(rclcpp::Duration(running_time));
     running_time += dt;
   }  //  end for simulation steps
 
   if (include_last_point_) {
     traj.poses.push_back(pose);
-    traj.time_offsets.push_back(rclcpp::Duration::from_seconds(running_time));
+    traj.time_offsets.push_back(rclcpp::Duration(running_time));
   }
 
   return traj;

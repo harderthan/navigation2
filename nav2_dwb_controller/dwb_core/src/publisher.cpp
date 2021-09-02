@@ -100,7 +100,7 @@ DWBPublisher::on_configure()
 
   double marker_lifetime = 0.0;
   node_->get_parameter(plugin_name_ + ".marker_lifetime", marker_lifetime);
-  marker_lifetime_ = rclcpp::Duration::from_seconds(marker_lifetime);
+  marker_lifetime_ = rclcpp::Duration(marker_lifetime);
 
   return nav2_util::CallbackReturn::SUCCESS;
 }

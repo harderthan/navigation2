@@ -88,7 +88,7 @@ LifecycleManagerClient::is_active(const std::chrono::nanoseconds timeout)
   auto future_result = is_active_client_->async_send_request(request);
 
   if (rclcpp::spin_until_future_complete(node_, future_result, timeout) !=
-    rclcpp::FutureReturnCode::SUCCESS)
+    rclcpp::executor::FutureReturnCode::SUCCESS)
   {
     return SystemStatus::TIMEOUT;
   }
@@ -124,7 +124,7 @@ LifecycleManagerClient::callService(uint8_t command, const std::chrono::nanoseco
   auto future_result = manager_client_->async_send_request(request);
 
   if (rclcpp::spin_until_future_complete(node_, future_result, timeout) !=
-    rclcpp::FutureReturnCode::SUCCESS)
+    rclcpp::executor::FutureReturnCode::SUCCESS)
   {
     return false;
   }

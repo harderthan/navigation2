@@ -64,21 +64,21 @@ TEST_F(IsStuckTestFixture, test_behavior)
   EXPECT_EQ(bt_node_->executeTick(), BT::NodeStatus::FAILURE);
 
   // huge negative velocity to simulate sudden brake
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.1);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.1);
   odom_msg.twist.twist.linear.x = -1.5;
   odom_pub->publish(odom_msg);
   std::this_thread::sleep_for(500ms);
   EXPECT_EQ(bt_node_->executeTick(), BT::NodeStatus::SUCCESS);
 
   // huge positive velocity means robot is not stuck anymore
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.2);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.2);
   odom_msg.twist.twist.linear.x = 1.0;
   odom_pub->publish(odom_msg);
   std::this_thread::sleep_for(500ms);
   EXPECT_EQ(bt_node_->executeTick(), BT::NodeStatus::FAILURE);
 
   // stuck again due to negative velocity change is smaller time period
-  odom_msg.header.stamp = time + rclcpp::Duration::from_seconds(0.25);
+  odom_msg.header.stamp = time + rclcpp::Duration(0.25);
   odom_msg.twist.twist.linear.x = 0.0;
   odom_pub->publish(odom_msg);
   std::this_thread::sleep_for(500ms);

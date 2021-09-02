@@ -100,7 +100,7 @@ void DWBLocalPlanner::configure(
 
   double transform_tolerance;
   node_->get_parameter(dwb_plugin_name_ + ".transform_tolerance", transform_tolerance);
-  transform_tolerance_ = rclcpp::Duration::from_seconds(transform_tolerance);
+  transform_tolerance_ = rclcpp::Duration(transform_tolerance);
   RCLCPP_INFO(node_->get_logger(), "Setting transform_tolerance to %f", transform_tolerance);
 
   node_->get_parameter(dwb_plugin_name_ + ".prune_plan", prune_plan_);

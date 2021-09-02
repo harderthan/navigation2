@@ -46,7 +46,7 @@ TEST(Utils, ClosestPose)
   for (unsigned int i = 0; i < traj.poses.size(); i++) {
     double d = static_cast<double>(i);
     traj.poses[i].x = d;
-    traj.time_offsets[i] = rclcpp::Duration::from_seconds(d);
+    traj.time_offsets[i] = rclcpp::Duration(d);
   }
 
   EXPECT_DOUBLE_EQ(getClosestPose(traj, 0.0).x, traj.poses[0].x);
@@ -71,7 +71,7 @@ TEST(Utils, ProjectPose)
     traj.poses[i].x = d;
     traj.poses[i].y = 30.0 - 2.0 * d;
     traj.poses[i].theta = 0.42;
-    traj.time_offsets[i] = rclcpp::Duration::from_seconds(d);
+    traj.time_offsets[i] = rclcpp::Duration(d);
   }
 
   EXPECT_DOUBLE_EQ(projectPose(traj, 0.0).x, 0.0);

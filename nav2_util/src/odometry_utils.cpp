@@ -28,7 +28,7 @@ OdomSmoother::OdomSmoother(
   double filter_duration,
   std::string odom_topic)
 : node_(nh),
-  odom_history_duration_(rclcpp::Duration::from_seconds(filter_duration))
+  odom_history_duration_(rclcpp::Duration(filter_duration))
 {
   odom_sub_ = nh->create_subscription<nav_msgs::msg::Odometry>(
     odom_topic,
